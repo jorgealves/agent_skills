@@ -1,0 +1,34 @@
+name: pedagogical-code-grader
+version: 1.0.0
+description: Evaluates student code submissions based on conceptual mastery rather than just correctness. Use to provide high-quality educational feedback on architectural patterns and programming logic.
+inputs:
+  student_code_path:
+    type: string
+    required: true
+  rubrics:
+    type: array
+    items:
+      type: string
+outputs:
+  grading_report:
+    type: object
+    properties:
+      score:
+        type: integer
+      feedback:
+        type: array
+capabilities:
+  - AST analysis for pattern verification.
+  - Contextual feedback generation.
+constraints:
+  - Pedagogical focus; not production-ready fix.
+security:
+  - Student code processed locally.
+examples:
+  - input:
+      student_code_path: "./sub"
+      rubrics: ["Loops"]
+    output:
+      grading_report:
+        score: 90
+        feedback: ["Excellent use of list comprehensions."]
