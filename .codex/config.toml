@@ -1,0 +1,23 @@
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 5
+
+[agents.requirements-reviewer]
+description = "Verifies code changes against explicit requirements, acceptance criteria, and documented behavior. Reports only actionable mismatches with file and line references."
+config_file = "agents/requirements-reviewer.toml"
+
+[agents.security-reviewer]
+description = "Reviews code defensively for security weaknesses, unsafe data handling, and missing protections. Reports evidence and impact without attempting exploitation."
+config_file = "agents/security-reviewer.toml"
+
+[agents.readability-reviewer]
+description = "Reviews changed code for clarity, naming, structure, and maintainability. Reports concrete readability problems without enforcing personal style preferences."
+config_file = "agents/readability-reviewer.toml"
+
+[agents.performance-reviewer]
+description = "Reviews changed code for evidence-based CPU, memory, I/O, and scalability regressions. Avoids speculative optimization advice."
+config_file = "agents/performance-reviewer.toml"
+
+[agents.documentation-reviewer]
+description = "Checks whether documentation and code comments accurately describe changed behavior, setup, interfaces, and operational requirements."
+config_file = "agents/documentation-reviewer.toml"
