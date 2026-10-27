@@ -1,0 +1,36 @@
+name: security-review
+version: 1.0.0
+description: Security and compliance review covering PII exposure, HIPAA technical safeguards, general security/compliance posture, and leaked secrets/credentials. Technology-agnostic. Use when auditing code, configs, logs, or datasets for sensitive-data handling and security compliance risks.
+inputs:
+  scope:
+    type: string
+    description: What to audit — a diff, PR reference, branch, file paths, log files, or dataset location.
+    required: true
+  areas:
+    type: array
+    description: Subset of areas to run. Defaults to all four if omitted.
+    required: false
+    default: [pii, hipaa, security_compliance, secret_leak]
+outputs:
+  findings:
+    type: array
+    description: List of findings grouped by area, each with severity, location, exposure description, and mitigation. Sensitive values themselves are never included.
+capabilities:
+  - Scans source, config, logs, and datasets for PII, PHI-handling gaps, security-compliance issues, and leaked secrets.
+constraints:
+  - Read-only: does not modify files, rotate credentials, or redact data automatically.
+  - Requires an explicit scope; does not infer what to audit.
+security:
+  - Operates locally on provided content only.
+  - Never reproduces the actual secret/PII value in its output — location and type only.
+examples:
+  - input:
+      scope: "src/ and .env.example"
+      areas: [secret_leak]
+    output:
+      findings:
+        - area: secret_leak
+          severity: P0
+          location: "config/settings.py:17"
+          exposure: "Hardcoded AWS access key committed to source."
+          mitigation: "Remove from source, rotate the key, move to a secret manager."
